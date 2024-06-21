@@ -1,0 +1,81 @@
+#root {
+  background-color: midnightblue;
+  /* remove horizontal scroll */
+  /* overflow-x: hidden; */
+}
+
+.img-style-like-yeah {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    align-content: end;
+    justify-content: center;
+  }
+  .img-div {
+    position: static;
+    overflow: visible;
+    direction: ltr;
+    text-align: justify;
+    display: flex;
+    justify-content: center;
+    align-content: space-evenly;
+  }
+  .base-div {
+    min-width: 95vw;
+    min-height: 100vh;
+    background-color: midnightblue;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 10px;
+  }
+
+  .about-html{
+    color: white;
+  }
+  /* .introduction-div {
+  } */
+  
+
+  .introduction-div{
+    display: block;
+    white-space: pre-wrap; /* Preserves newlines */
+    word-wrap: break-word; /* Breaks long words */
+    font-family: Arial, sans-serif;
+    flex-direction: column;;
+    justify-content: center;
+    align-items: center;
+    width: 51vw;
+    background-color: midnightblue;
+    color: white;
+  }
+  .introduction-essay{
+    display: block;
+    /* space evenly */
+    justify-content: center;
+    align-items: center;
+    width: 55vw;
+    height: 70vh;
+    background-color: midnightblue;
+    color: white;
+
+    /* remove border and make static */
+    border: none;
+    position: static;
+    resize: none;
+  }
+
+
+
+
+
+  .img{
+    /* width: 50vw; */
+    height: 70vh;
+  }
+
+
+
+
+
