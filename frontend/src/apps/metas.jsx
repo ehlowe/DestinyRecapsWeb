@@ -1,9 +1,24 @@
 import React, { useState, useEffect } from 'react';
-
+// import { useLocation } from 'react-router-dom';
 import "./metas.css";
 
 
+
+
+
 function Metas() {
+
+    // // Google Analytics
+    // const location = useLocation();
+    // useEffect(() => {
+    //   if (window.gtag) {
+    //     window.gtag('config', 'G-5D9W9V02H0', {
+    //       page_path: location.pathname,
+    //     });
+    //   }
+    // }, [location]);
+
+
     var [metas, setMetas] = useState([]);
 
     useEffect(() => {
