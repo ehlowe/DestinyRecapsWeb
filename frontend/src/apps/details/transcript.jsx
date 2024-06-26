@@ -1,11 +1,18 @@
 import React, { useRef, useEffect } from 'react';
+import styles from "./transcript.module.css";
+
+// import loadingGif from '../assets/loading-wtf.gif';
+import transparentLoadingGif from '../../assets/loading_transparent.gif';
+const loadingGif=transparentLoadingGif;
 
 
-//create style for .highlight
+// set style of all highlighted words using styles.highlight
 
-const TranscriptComponent = ({ meta, characterIndex }) => {
+
+
+const TranscriptComponent = ({ linked_transcript, characterIndex }) => {
   const transcriptRef = useRef(null);
-  const highlightClass = 'highlight';
+  const highlightClass = styles.highlight;
 
   useEffect(() => {
     if (characterIndex !== null && transcriptRef.current) {
@@ -69,8 +76,10 @@ const TranscriptComponent = ({ meta, characterIndex }) => {
   return (
     <div className="meta-content" ref={transcriptRef}>
       <div className="meta-text">
-        <div className="scrollable-content">
-          <div id="linked-transcript" dangerouslySetInnerHTML={{ __html: meta.linked_transcript }} />
+        <div className={styles.scrollableContent}>
+          {/* <img src={loadingGif} alt="loading"/> */}
+        {/* <img src={loadingGif} alt="loading"/> */}
+          {(linked_transcript!=null)?<div id="linked-transcript" dangerouslySetInnerHTML={{ __html: linked_transcript }} />:<img src={loadingGif} alt="loading"/>}
         </div>
       </div>
     </div>

@@ -1,0 +1,61 @@
+
+.recap-div {
+    color: white;
+    background-color: #191970; /* Midnight Blue */
+    width: 100%;
+    height: 100%;
+}
+.dropdown-container {
+    width: 45vw;
+    margin: 20px;
+    /* border: 1px solid #ccc; */
+    border-radius: 5px;
+    background-color: #191970; /* Midnight Blue */
+    position: relative;
+    transition: max-height 0.3s ease;
+    max-height: Auto; /* Initial max-height to show only the title and summary */
+    overflow: hidden;
+}
+.dropdown-title {
+    padding: 5px 10px;
+    /* border-bottom: 1px solid #ccc; */
+    color: white;
+    cursor: pointer;
+    background-color: #1c1c8c; /* Slightly different shade of midnight blue */
+    margin: 0; /* Remove margin */
+}
+.dropdown-info {
+    padding: 5px 10px;
+    background-color: #1c1c8c;
+    border-bottom: 1px solid #ccc;
+    color: white;
+    margin: 0; /* Remove margin */
+    line-height: 1.4; /* Adjust line-height */
+}
+.dropdown-content {
+    background-color: #1c1c8c;
+    margin: 0; /* Remove margin */
+    line-height: 1.4; /* Adjust line-height */
+    visibility: hidden; /* Hide initially */
+    opacity: 0; /* Make invisible initially */
+    height: 0; /* No height initially */
+    transition: visibility 0s, opacity 0.3s linear, height 0.3s ease;
+}
+.dropdown-container:hover .dropdown-content {
+    visibility: visible; /* Show on hover */
+    opacity: 1; /* Fade in on hover */
+    height: 1.5em; /* Show exactly 100px on hover */
+}
+.dropdown-container.clicked {
+    max-height: 1000px; /* Large max-height to accommodate full content */
+}
+.dropdown-container.clicked .dropdown-content {
+    visibility: visible; /* Ensure visibility when clicked */
+    opacity: 1; /* Ensure opacity when clicked */
+    height: auto; /* Full height when clicked */
+}
+p {
+    margin: 0; /* Remove margin from paragraphs */
+    padding: 0; /* Remove padding from paragraphs */
+    color: white;
+}
