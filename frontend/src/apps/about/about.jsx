@@ -12,7 +12,7 @@ Solution:
 Can a system be built to present a condensed version of a longer context, so that someone could grab the gist and guide themselves toward their interest if any from the content? Would that be valuable and or fix some of the current issues?`;
 
 
-import imagePath from '../assets/transparent_destinyrecaps.png';
+import imagePath from '../../assets/transparent_destinyrecaps.png';
 
 const about_html=`
 <br><br>
@@ -25,7 +25,7 @@ GIthub:
 Twitter: <a href=https://twitter.com/zapperstrudel>https://twitter.com/zapperstrudel</a>
 
 <br>
-The Discord: <a href=https://discord.gg/ycWjsRjt>https://discord.gg/ycWjsRjt</a>
+JOIN THE DISCORD! <a href=https://discord.gg/fQmwYQuR>https://discord.gg/fQmwYQuR</a>
 <br>
 My Discord: complicatedbananas9984
 

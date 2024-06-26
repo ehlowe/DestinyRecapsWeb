@@ -1,7 +1,6 @@
-// src/analytics.js
 import ReactGA from 'react-ga4';
 
-const TRACKING_ID = 'G-5D9W9V02H0'; // Replace with your Google Analytics tracking ID
+const TRACKING_ID = 'G-5D9W9V02H0';
 
 export const initGA = () => {
   ReactGA.initialize(TRACKING_ID);
