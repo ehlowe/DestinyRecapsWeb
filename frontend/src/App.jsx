@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes, useNavigate, useLocation } from
 import About from './apps/about';
 import Metas from './apps/metas';
 import Details from './apps/details';
+import Recap from './apps/recap';
 import "./app_button.css";
 
 import { initGA, logPageView } from './analytics';
@@ -47,6 +48,7 @@ function PageContent() {
     <div>
       <Navigation />
       <Routes>
+        <Route path="/recap" element={<Recap />} />
         <Route path="/about" element={<About />} />
         <Route path="/" element={<Metas />} />
         <Route path="/details" element={<Details />} />

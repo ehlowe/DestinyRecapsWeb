@@ -5,9 +5,33 @@ import "./details.css";
 
 
 
-
+// import loadingGif from '../assets/loading-wtf.gif';
+import transparentLoadingGif from '../assets/loading_transparent.gif';
+const loadingGif=transparentLoadingGif;
 
 import TranscriptComponent from './transcript';
+
+
+function isHTML(meta){
+    if (meta==null){
+        return false;
+    }
+    //look for any header tags
+    let header = meta.match(/<h[1-6]>/g);
+    if (header){
+        return true;
+    }
+    
+    // look for list tags
+    let list = meta.match(/<li>/g);
+    if (list){
+        return true;
+    }
+
+    //otherwise, return false
+    return false;   
+}
+
 
 const Details = () => {
    
@@ -63,6 +87,17 @@ const Details = () => {
                 });
         }
     }, []);
+    var rand_num=Math.random();
+    console.log(rand_num);
+    rand_num=rand_num*10;
+    console.log(rand_num);
+    // convert to integer
+    rand_num=Math.round(rand_num);
+    console.log(rand_num);
+
+    console.log(rand_num%3)
+
+    
 
 
     return (
@@ -70,11 +105,26 @@ const Details = () => {
         <div className="detail-wrapper">
             <div className="summary-container">
                 <div className="summary">
-                    <textarea
+                    {/* <textarea
                         className="summary-text"
                         value={meta.meta}
                         onChange={(e) => setMeta({ ...meta, meta: e.target.value })}
-                    ></textarea>
+                    ></textarea> */}
+
+
+                    {(isHTML(meta.meta)==true)?<div className="summary-text" dangerouslySetInnerHTML={{__html: meta.meta}} onChange={(e) => setMeta({ ...meta, meta: e.target.value })}></div>:<textarea
+                        className="summary-text"
+                        value={meta.meta}
+                        onChange={(e) => setMeta({ ...meta, meta: e.target.value })}
+                    ></textarea>}
+
+                    {/* {(isHTML(meta.meta)==true)?<textarea
+                        className="summary-text"
+                        value={meta.meta}
+                        onChange={(e) => setMeta({ ...meta, meta: e.target.value })}
+                    ></textarea>:null} */}
+
+
                 </div>
             </div>
             <div className="meta-wrapper">
@@ -94,8 +144,7 @@ const Details = () => {
                         <div className="search-buttons">
                             {/* <button onClick={()=>EmbeddingSearch(document.getElementById('embedding-search-input').value)}> */}
                             <button onClick={fetchIndexData}>
-                            {/* <button> */}
-                                Search
+                                {(loading)?((Math.round(Math.random()*10))%9==0)?<img src={loadingGif}/>:<img src={transparentLoadingGif}/>:"Search"}
                             </button>
                             <button id="next-button" onClick={() => setTranscriptIndexSelect(transcriptIndexSelect<4?transcriptIndexSelect+1:0)}>
                                 Next {transcriptIndexSelect==null?null:String(transcriptIndexSelect)+'->'+String(transcriptIndexSelect<4?transcriptIndexSelect+1:0)}

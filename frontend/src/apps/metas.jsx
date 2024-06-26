@@ -4,6 +4,27 @@ import "./metas.css";
 
 
 
+function isHTML(meta){
+    if (meta==null){
+        return false;
+    }
+
+    //look for any header tags
+    let header = meta.match(/<h[1-6]>/g);
+    if (header){
+        return true;
+    }
+    
+    // look for list tags
+    let list = meta.match(/<li>/g);
+    if (list){
+        return true;
+    }
+
+    //otherwise, return false
+    return false;   
+}
+
 
 
 function Metas() {
@@ -57,7 +78,8 @@ function Metas() {
                                 </div>
                             </div>
                             <div className="meta-content">
-                                <textarea className="meta-textarea">{ meta.meta }</textarea>
+                                {(isHTML(meta.meta)==true)?(<div className="meta-textarea" dangerouslySetInnerHTML={{__html: meta.meta}}></div>):(<textarea className="meta-textarea">{ meta.meta }</textarea>)}
+                                {/* <textarea className="meta-textarea">{ meta.meta }</textarea> */}
                             </div>
 
                         </div>

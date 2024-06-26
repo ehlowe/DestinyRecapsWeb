@@ -1,5 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 
+// import loadingGif from '../assets/loading-wtf.gif';
+import transparentLoadingGif from '../assets/loading_transparent.gif';
+const loadingGif=transparentLoadingGif;
 
 //create style for .highlight
 
@@ -70,7 +73,9 @@ const TranscriptComponent = ({ meta, characterIndex }) => {
     <div className="meta-content" ref={transcriptRef}>
       <div className="meta-text">
         <div className="scrollable-content">
-          <div id="linked-transcript" dangerouslySetInnerHTML={{ __html: meta.linked_transcript }} />
+          {/* <img src={loadingGif} alt="loading"/> */}
+        {/* <img src={loadingGif} alt="loading"/> */}
+          {(meta.linked_transcript!=null)?<div id="linked-transcript" dangerouslySetInnerHTML={{ __html: meta.linked_transcript }} />:<img src={loadingGif} alt="loading"/>}
         </div>
       </div>
     </div>
