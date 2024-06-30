@@ -6,10 +6,10 @@ import "./details.css";
 
 
 // import loadingGif from '../assets/loading-wtf.gif';
-import transparentLoadingGif from '../assets/loading_transparent.gif';
+import transparentLoadingGif from '../../assets/loading_transparent.gif';
 const loadingGif=transparentLoadingGif;
 
-import TranscriptComponent from './transcript';
+import TranscriptComponent from '../transcript';
 
 
 function isHTML(meta){
@@ -37,6 +37,8 @@ const Details = () => {
    
     // Set up state variables
     const [meta, setMeta] = useState({});
+    const [linked_transcript, setLinkedTranscript] = useState(null);
+    const [linked_transcript_error, setLinkedTranscriptError] = useState(null);
     const [searchParams] = useSearchParams();
     const videoId = searchParams.get('video_id');
     const [index, setIndex] = useState(null);
@@ -56,6 +58,18 @@ const Details = () => {
                 setMeta(data);
             })
             .catch(error => console.error('Error fetching metas:', error));
+    }, []);
+
+    useEffect(() => {
+        fetch('/api/linked_transcript?video_id=' + videoId)
+            .then(response => response.json())
+            .then(data => {
+                setLinkedTranscript(data);
+            })
+            .catch (error => {
+                console.error('Error fetching linked transcript:', error);
+                setLinkedTranscriptError(error);
+            });
     }, []);
     
 
@@ -88,14 +102,8 @@ const Details = () => {
         }
     }, []);
     var rand_num=Math.random();
-    console.log(rand_num);
     rand_num=rand_num*10;
-    console.log(rand_num);
-    // convert to integer
     rand_num=Math.round(rand_num);
-    console.log(rand_num);
-
-    console.log(rand_num%3)
 
     
 
@@ -152,11 +160,23 @@ const Details = () => {
                         </div>
                     </div>
                 </div>
-                <div>
-                    {/* <div><TranscriptComponent meta={meta} characterIndex={index} /></div> */}
-                    <div><TranscriptComponent meta={meta} characterIndex={
-                        transcriptIndexSelect==null?null:transcriptIndexes[transcriptIndexSelect]
-                    } /></div>
+                <div className="hyperlink-container">
+                    {
+                        linked_transcript!=null?
+                        <div><TranscriptComponent linked_transcript={linked_transcript.linked_transcript} characterIndex={
+                            transcriptIndexSelect==null?null:transcriptIndexes[transcriptIndexSelect]
+                        } /></div>
+                        :
+                        <div className="nonlinked-transcript-container">
+                            {linked_transcript_error!=null?
+                                null:
+                                <h3 style={{color: 'white'}}>
+                                    Loading Hyperlinked Transcript...
+                                </h3>
+                            }
+                            <textarea className="nonlinked-transcript" value={meta.transcript}/>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

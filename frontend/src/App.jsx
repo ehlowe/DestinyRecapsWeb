@@ -1,26 +1,26 @@
 // src/App.js
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, useNavigate, useLocation } from 'react-router-dom';
-import About from './apps/about';
-import Metas from './apps/metas';
-import Details from './apps/details';
-import Recap from './apps/recap';
-import "./app_button.css";
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import About from './apps/about/about';
+import Metas from './apps/recaps/recaps';
+import Details from './apps/details/details';
+import Recap from './apps/info-tab-test/recap';
+import Navigation from './apps/nav-buttons/app_buttons';
 
 import { initGA, logPageView } from './analytics';
 import usePageTracking from './usePageTracking';
 
-// Component for navigation buttons
-function Navigation() {
-  const navigate = useNavigate();
+// // Component for navigation buttons
+// function Navigation() {
+//   const navigate = useNavigate();
 
-  return (
-    <div className="base-button-div">
-      <button className="home-button" onClick={() => navigate(`/`)}>Homepage</button>
-      <button className="about-button" onClick={() => navigate(`/about`)}>About</button>
-    </div>
-  );
-}
+//   return (
+//     <div className="base-button-div">
+//       <button className="home-button" onClick={() => navigate(`/`)}>Homepage</button>
+//       <button className="about-button" onClick={() => navigate(`/about`)}>About</button>
+//     </div>
+//   );
+// }
 
 // Main app component
 function App() {

@@ -18,12 +18,6 @@ function usePageTracking() {
     const videoId = searchParams.get('video_id');
     const title = pageTitles[path] || 'Unknown Page';
 
-
-    // Include video_id if available
-    console.log("TRYING TO CHANGE TITLE: ",title);
-    console.log("VidoeID", videoId);
-    console.log("Location", location);
-    console.log("Path", path);
     if (videoId) {
       //document.title = title
       document.title= `${title} - Video ${videoId}`;

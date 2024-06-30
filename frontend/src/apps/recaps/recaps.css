@@ -123,6 +123,7 @@ body {
 .meta-iframe {
   height: 100%;
   width: 100%;
+  border: 0px;
 }
 
 /* Content is the textbox */

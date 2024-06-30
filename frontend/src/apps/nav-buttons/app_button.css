@@ -1,0 +1,30 @@
+.base-button-div{
+  width: 90vw;
+  display: flex;
+  flex-direction: row;
+}
+.home-button {
+    margin: 8px;
+    display: 'grid';
+    background-color: #1b75bc;
+    color: #e5e7eb;
+  }
+
+  .about-button {
+    display: 'grid';
+    margin: 8px;
+    background-color: #1b75bc;
+    color: #e5e7eb;
+  }
+.header-title-div{
+  color: white;
+  text-align: center;
+  justify-content: center;
+  width: 90vw;
+}
+.header-title{
+  color: white;
+  text-align: center;
+  width: 90vw;
+  justify-content: center;
+}

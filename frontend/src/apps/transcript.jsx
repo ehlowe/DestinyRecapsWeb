@@ -6,7 +6,7 @@ const loadingGif=transparentLoadingGif;
 
 //create style for .highlight
 
-const TranscriptComponent = ({ meta, characterIndex }) => {
+const TranscriptComponent = ({ linked_transcript, characterIndex }) => {
   const transcriptRef = useRef(null);
   const highlightClass = 'highlight';
 
@@ -75,7 +75,7 @@ const TranscriptComponent = ({ meta, characterIndex }) => {
         <div className="scrollable-content">
           {/* <img src={loadingGif} alt="loading"/> */}
         {/* <img src={loadingGif} alt="loading"/> */}
-          {(meta.linked_transcript!=null)?<div id="linked-transcript" dangerouslySetInnerHTML={{ __html: meta.linked_transcript }} />:<img src={loadingGif} alt="loading"/>}
+          {(linked_transcript!=null)?<div id="linked-transcript" dangerouslySetInnerHTML={{ __html: linked_transcript }} />:<img src={loadingGif} alt="loading"/>}
         </div>
       </div>
     </div>
