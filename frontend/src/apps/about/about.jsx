@@ -25,7 +25,7 @@ GIthub:
 Twitter: <a href=https://twitter.com/zapperstrudel>https://twitter.com/zapperstrudel</a>
 
 <br>
-The Discord: <a href=https://discord.gg/ycWjsRjt>https://discord.gg/ycWjsRjt</a>
+JOIN THE DISCORD! <a href=https://discord.gg/fQmwYQuR>https://discord.gg/fQmwYQuR</a>
 <br>
 My Discord: complicatedbananas9984
 

@@ -1,21 +1,22 @@
 .base-button-div{
-  width: 90vw;
+  width: 100%;
   display: flex;
-  flex-direction: row;
+  /* flex-direction: row; */
+  align-items: center;
+  position: relative;
+  /* justify-content: center; */
 }
 .home-button {
     margin: 8px;
-    display: 'grid';
     background-color: #1b75bc;
     color: #e5e7eb;
-  }
+}
 
-  .about-button {
-    display: 'grid';
-    margin: 8px;
-    background-color: #1b75bc;
-    color: #e5e7eb;
-  }
+.about-button {
+  margin: 8px;
+  background-color: #1b75bc;
+  color: #e5e7eb;
+}
 .header-title-div{
   color: white;
   text-align: center;
@@ -27,4 +28,40 @@
   text-align: center;
   width: 90vw;
   justify-content: center;
+}
+/* .discord-banner{
+  display: flex;
+  align-self: center;
+  margin: 8px;
+  font-size: 2em;
+  text-align: center;
+  color: #e5e7eb;
+  justify-self: center;
+} */
+
+.discord-banner {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 8px;
+  font-size: 2em;
+  text-align: center;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .base-button-div {
+    flex-direction: column;
+    align-items: center; /* Center items vertically in the column layout */
+  }
+
+  .discord-banner {
+    position: static;
+    transform: none;
+    margin: 8px 0;
+  }
+
+  .home-button, .about-button {
+    margin: 8px 0;
+  }
 }

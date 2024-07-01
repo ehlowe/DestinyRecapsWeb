@@ -96,7 +96,8 @@ body {
   flex-direction: row;
   justify-content: space-evenly;
   width: 100%; /* Takes the full width of its parent */
-  height: 25%;
+  /* height: 25%; */
+  
 }
 .meta-info {
   display: flex;
@@ -177,6 +178,23 @@ body {
     background-color: rgb(13, 13, 56);
   }
 
+
+@media (max-width: 768px) {
+  .all-metas {
+    grid-template-columns: repeat(1,1fr);
+  }
+  .meta-container {
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
+    margin-bottom: 20px;
+    width: 80vw;
+    height: 60vh;
+    box-sizing: border-box;
+    background-color: rgb(13, 13, 65);
+  }
+}
 
 
 
