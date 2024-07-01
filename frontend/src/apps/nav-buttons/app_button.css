@@ -43,6 +43,7 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  padding-top: 20px;
   margin: 8px;
   font-size: 2em;
   text-align: center;
@@ -58,7 +59,8 @@
   .discord-banner {
     position: static;
     transform: none;
-    margin: 8px 0;
+    margin: 8px;
+    
   }
 
   .home-button, .about-button {

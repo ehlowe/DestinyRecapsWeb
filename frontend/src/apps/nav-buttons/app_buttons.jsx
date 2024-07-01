@@ -8,7 +8,7 @@ function Navigation() {
       <div className="base-button-div">
         <button className="home-button" onClick={() => navigate(`/`)}>Homepage</button>
         <button className="about-button" onClick={() => navigate(`/about`)}>About</button>
-        <div className="discord-banner" dangerouslySetInnerHTML={{__html: `JOIN THE DISCORD! <a href=https://discord.gg/fQmwYQuR>https://discord.gg/fQmwYQuR</a>`}}>
+        <div className="discord-banner" dangerouslySetInnerHTML={{__html: `JOIN THE DISCORD! (for post stream recap messages) <a href=https://discord.gg/fQmwYQuR>https://discord.gg/fQmwYQuR</a>`}}>
         </div>
       </div>
     );
