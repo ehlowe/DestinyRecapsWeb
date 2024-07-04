@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-// import { useLocation } from 'react-router-dom';
-import "./recaps.css";
+import styles from "./recaps.module.css";
 
 
-
+// returns true if the meta is HTML
 function isHTML(meta){
     if (meta==null){
         return false;
@@ -28,20 +27,8 @@ function isHTML(meta){
 
 
 function Metas() {
-
-    // // Google Analytics
-    // const location = useLocation();
-    // useEffect(() => {
-    //   if (window.gtag) {
-    //     window.gtag('config', 'G-5D9W9V02H0', {
-    //       page_path: location.pathname,
-    //     });
-    //   }
-    // }, [location]);
-
-
+    // Fetch metas from the API
     var [metas, setMetas] = useState([]);
-
     useEffect(() => {
         fetch('/api/metas/')
             .then(response => {
@@ -58,28 +45,27 @@ function Metas() {
             });
     }, []);
 
+    // Render metas
     return (
-
-        <div className='page-div'>
-            <div className="meta-header">
+        <div className={styles.pageDiv}>
+            <div className={styles.recapHeader}>
                 <h1>Recaps</h1>
             </div>
-            <div className="metas-wrapper">
-                <div className="all-metas">
+            <div className={styles.recapsWrapper}>
+                <div className={styles.allRecaps}>
                     {metas.map(meta => (
-                        <div className="meta-container" key={meta.video_id}>
-                            <div className='meta-details'>
-                                <div className="meta-info">
+                        <div className={styles.recapContainer} key={meta.video_id}>
+                            <div className={styles.recapInfoVideo}>
+                                <div className={styles.recapInfo}>
                                     <strong className="meta-title">Title: { meta.title }</strong>
-                                    <button className="detail-button" onClick={() => window.location.href = `/details?video_id=${meta.video_id}`}>Details</button>
+                                    <button className={styles.detailButton} onClick={() => window.location.href = `/details?video_id=${meta.video_id}`}>Details</button>
                                 </div>
-                                <div className="meta-video">
-                                    <iframe className="meta-iframe" src={`https://www.youtube.com/embed/${meta.video_id}`} border="0" allowFullScreen></iframe>
+                                <div className={styles.recapVideo}>
+                                    <iframe className={styles.recapIframe} src={`https://www.youtube.com/embed/${meta.video_id}`} border="0" allowFullScreen></iframe>
                                 </div>
                             </div>
-                            <div className="meta-content">
-                                {(isHTML(meta.meta)==true)?(<div className="meta-textarea" dangerouslySetInnerHTML={{__html: meta.meta}}></div>):(<textarea className="meta-textarea" value={meta.meta} readOnly></textarea>)}
-                                {/* <textarea className="meta-textarea">{ meta.meta }</textarea> */}
+                            <div className={styles.recapContent}>
+                                {(isHTML(meta.meta)==true)?(<div className={styles.recapTextarea} dangerouslySetInnerHTML={{__html: meta.meta}}></div>):(<textarea className={styles.recapTextarea} value={meta.meta} readOnly></textarea>)}
                             </div>
 
                         </div>

@@ -1,4 +1,3 @@
-// src/usePageTracking.js
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -19,15 +18,10 @@ function usePageTracking() {
     const title = pageTitles[path] || 'Unknown Page';
 
     if (videoId) {
-      //document.title = title
       document.title= `${title} - Video ${videoId}`;
     } else {
       document.title = title;
     }
-
-    // document.title= `${title} - Video ${videoId}`
-
-
   }, [location]);
 }
 

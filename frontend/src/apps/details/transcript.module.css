@@ -1,0 +1,42 @@
+
+/* Set styling for the transcript div */
+.scrollableContent {
+    width: 100%;
+    max-height: 70vh; /* or any other value */
+    overflow-y: auto; /* This enables vertical scrolling */
+    border: 1px solid #ccc; /* Optional, just for visibility */
+    padding: 10px;
+    color: white;
+}
+.scrollableContent a {
+    width: 100%;
+    max-height: 70vh; /* or any other value */
+    overflow-y: auto; /* This enables vertical scrolling */
+    color: white;
+}
+
+/* Transcript Text Styling and sizing */
+.linkedTranscript {
+    text-decoration: none;   
+    font-size: 20px;
+    font-family: 'Verdana';
+    color: white;
+}
+.linkedTranscript a {
+    text-decoration: none;   
+    font-size: 20px;
+    font-family: 'Verdana';
+    /* Get rid of underline */
+    color: white;
+}
+#linkedTranscript {
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+/* Search highlight color */
+.highlight {
+    /* gunmetal color */
+    /* background-color: #2C3539; */
+    background-color: rgb(118, 53, 53);
+}

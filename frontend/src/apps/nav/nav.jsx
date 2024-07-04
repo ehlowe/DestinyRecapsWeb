@@ -1,6 +1,6 @@
 // Component for navigation buttons
 import { useNavigate } from 'react-router-dom';
-import "./app_button.css";
+import "./nav.css";
 function Navigation() {
     const navigate = useNavigate();
   
