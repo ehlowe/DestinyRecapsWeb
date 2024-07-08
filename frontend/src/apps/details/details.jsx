@@ -9,19 +9,19 @@ const loadingGif=transparentLoadingGif;
 // import transcript component
 import TranscriptComponent from './transcript';
 
-// returns true if the meta is HTML
-function isHTML(meta){
-    if (meta==null){
+// returns true if the recap is HTML
+function isHTML(recap){
+    if (recap==null){
         return false;
     }
     //look for any header tags
-    let header = meta.match(/<h[1-6]>/g);
+    let header = recap.match(/<h[1-6]>/g);
     if (header){
         return true;
     }
     
     // look for list tags
-    let list = meta.match(/<li>/g);
+    let list = recap.match(/<li>/g);
     if (list){
         return true;
     }
@@ -34,7 +34,7 @@ function isHTML(meta){
 const Details = () => {
    
     // Set up state variables
-    const [meta, setMeta] = useState({});
+    const [recap, setRecap] = useState({});
     const [linked_transcript, setLinkedTranscript] = useState(null);
     const [linked_transcript_error, setLinkedTranscriptError] = useState(null);
     const [searchParams] = useSearchParams();
@@ -48,14 +48,14 @@ const Details = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    // Meta Fetch
+    // Recap Fetch
     useEffect(() => {
-        fetch('/api/details?video_id=' + videoId)
+        fetch('/api/recap_details?video_id=' + videoId)
             .then(response => response.json())
             .then(data => {
-                setMeta(data);
+                setRecap(data);
             })
-            .catch(error => console.error('Error fetching metas:', error));
+            .catch(error => console.error('Error fetching recap:', error));
     }, []);
 
     useEffect(() => {
@@ -111,10 +111,10 @@ const Details = () => {
             {/* Container for the recap */}
             <div className={styles.recapContainer}>
                 <div className={styles.recap}>
-                    {(isHTML(meta.meta)==true)?<div className={styles.recapHtml} dangerouslySetInnerHTML={{__html: meta.meta}} onChange={(e) => setMeta({ ...meta, meta: e.target.value })}></div>:<textarea
+                    {(isHTML(recap.recap)==true)?<div className={styles.recapHtml} dangerouslySetInnerHTML={{__html: recap.recap}} onChange={(e) => setRecap({ ...recap, recap: e.target.value })}></div>:<textarea
                         className={styles.recapPlainText}
-                        value={meta.meta}
-                        onChange={(e) => setMeta({ ...meta, meta: e.target.value })}
+                        value={recap.recap}
+                        onChange={(e) => setRecap({ ...recap, recap: e.target.value })}
                     ></textarea>}
                 </div>
             </div>
@@ -126,7 +126,7 @@ const Details = () => {
                     <div className={styles.infoSearchContainer}>
                         <div className={styles.search}>
                             <div className={styles.recapHeader}>
-                                <strong>{ meta.title }</strong>
+                                <strong>{ recap.title }</strong>
                             </div>
                             <div className={styles.searchField}>
                                 <p>Embedding Search: </p>
@@ -142,7 +142,7 @@ const Details = () => {
                             </div>
                         </div>
                         <div className={styles.videoContainer}>
-                            <iframe className={styles.metaIframe} src={`https://www.youtube.com/embed/${meta.video_id}`} allowFullScreen>
+                            <iframe className={styles.recapIframe} src={`https://www.youtube.com/embed/${recap.video_id}`} allowFullScreen>
                             </iframe>
                         </div>
                     </div>
@@ -162,7 +162,7 @@ const Details = () => {
                                         Loading Hyperlinked Transcript...
                                     </h3>
                                 }
-                                <textarea className={styles.nonlinkedTranscript} value={meta.transcript}/>
+                                <textarea className={styles.nonlinkedTranscript} value={recap.transcript}/>
                             </div>
                         }
                     </div>

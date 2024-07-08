@@ -3,19 +3,19 @@ import styles from "./recaps.module.css";
 
 
 // returns true if the meta is HTML
-function isHTML(meta){
-    if (meta==null){
+function isHTML(recap){
+    if (recap==null){
         return false;
     }
 
     //look for any header tags
-    let header = meta.match(/<h[1-6]>/g);
+    let header = recap.match(/<h[1-6]>/g);
     if (header){
         return true;
     }
     
     // look for list tags
-    let list = meta.match(/<li>/g);
+    let list = recap.match(/<li>/g);
     if (list){
         return true;
     }
@@ -26,26 +26,26 @@ function isHTML(meta){
 
 
 
-function Metas() {
-    // Fetch metas from the API
-    var [metas, setMetas] = useState([]);
+function Recaps() {
+    // Fetch recaps from the API
+    var [recaps, setRetas] = useState([]);
     useEffect(() => {
-        fetch('/api/metas/')
+        fetch('/api/recaps/')
             .then(response => {
                 if (!response.ok) {
-                    throw new Error(`Failed to fetch metas with status: ${response.status}`);
+                    throw new Error(`Failed to fetch recaps with status: ${response.status}`);
                 }
                 return response.json();
             })
             .then(data => {
-                setMetas(data);
+                setRetas(data);
             })
             .catch(error => {
-                console.error('Error fetching metas:', error);
+                console.error('Error fetching recaps:', error);
             });
     }, []);
 
-    // Render metas
+    // Render recaps
     return (
         <div className={styles.pageDiv}>
             <div className={styles.recapHeader}>
@@ -53,19 +53,19 @@ function Metas() {
             </div>
             <div className={styles.recapsWrapper}>
                 <div className={styles.allRecaps}>
-                    {metas.map(meta => (
-                        <div className={styles.recapContainer} key={meta.video_id}>
+                    {recaps.map(recap => (
+                        <div className={styles.recapContainer} key={recap.video_id}>
                             <div className={styles.recapInfoVideo}>
                                 <div className={styles.recapInfo}>
-                                    <strong className="meta-title">Title: { meta.title }</strong>
-                                    <button className={styles.detailButton} onClick={() => window.location.href = `/details?video_id=${meta.video_id}`}>Details</button>
+                                    <strong className="recap-title">Title: { recap.video_characteristics.title }</strong>
+                                    <button className={styles.detailButton} onClick={() => window.location.href = `/details?video_id=${recap.video_id}`}>Details</button>
                                 </div>
                                 <div className={styles.recapVideo}>
-                                    <iframe className={styles.recapIframe} src={`https://www.youtube.com/embed/${meta.video_id}`} border="0" allowFullScreen></iframe>
+                                    <iframe className={styles.recapIframe} src={`https://www.youtube.com/embed/${recap.video_id}`} border="0" allowFullScreen></iframe>
                                 </div>
                             </div>
                             <div className={styles.recapContent}>
-                                {(isHTML(meta.meta)==true)?(<div className={styles.recapTextarea} dangerouslySetInnerHTML={{__html: meta.meta}}></div>):(<textarea className={styles.recapTextarea} value={meta.meta} readOnly></textarea>)}
+                                {(isHTML(recap.recap)==true)?(<div className={styles.recapTextarea} dangerouslySetInnerHTML={{__html: recap.recap}}></div>):(<textarea className={styles.recapTextarea} value={recap.recap} readOnly></textarea>)}
                             </div>
 
                         </div>
@@ -77,4 +77,4 @@ function Metas() {
     );
 }
 
-export default Metas;
+export default Recaps;
