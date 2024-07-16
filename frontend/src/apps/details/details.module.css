@@ -113,6 +113,50 @@
 }
 
 
+.streamPlot{
+    /*  display items in this div so they are centered in the div*/
+    display: flex;
+    justify-content: center;
+}
+.plotFooter{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    color: white;
+}
+
+.streamPlotPlacing{
+    width: 67%;
+    margin-top: -40vh; 
+}
+
+
+
+@media (max-width: 1500px) {
+    .streamPlotPlacing{
+        width: 95%;
+        margin-top: -30vh;
+    }
+}
+
+@media (max-width: 1300px) {
+    /* .detailWrapper{
+        display: flex;
+        flex-direction: column;
+        width: 95%;
+    }
+    .recapContainer {
+        width: 100%;
+    }
+    .infoSearchTranscriptWrapper {
+        width: 100%;
+    } */
+    .streamPlotPlacing{
+        width: 95%;
+        margin-top: -20vh;
+    }
+  }
+
 /* Mobile adjustments */
 @media (max-width: 768px) {
     .detailWrapper{
@@ -125,5 +169,9 @@
     }
     .infoSearchTranscriptWrapper {
         width: 100%;
+    }
+    .streamPlotPlacing{
+        width: 95%;
+        margin-top: -15vh;
     }
   }

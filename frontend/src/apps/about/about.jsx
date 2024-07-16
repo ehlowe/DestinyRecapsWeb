@@ -14,6 +14,13 @@ Can a system be built to present a condensed version of a longer context, so tha
 
 import imagePath from '../../assets/transparent_destinyrecaps.png';
 
+// import imagePath from '../../assets/segment_central_hub_chart_transparent.png';
+
+// imagePath=realImage;
+
+// const plotted_stream=``;
+// const plotted_stream=``;
+
 const about_html=`
 <br><br>
 <h3>Links and Other Info</h3>
@@ -25,7 +32,7 @@ GIthub:
 Twitter: <a href=https://twitter.com/zapperstrudel>https://twitter.com/zapperstrudel</a>
 
 <br>
-JOIN THE DISCORD! <a href=https://discord.gg/fQmwYQuR>https://discord.gg/fQmwYQuR</a>
+JOIN THE DISCORD! <a href= https://discord.gg/Bf8JgeFynz> https://discord.gg/Bf8JgeFynz </a>
 <br>
 My Discord: complicatedbananas9984
 
