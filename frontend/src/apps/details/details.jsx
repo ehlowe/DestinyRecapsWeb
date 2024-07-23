@@ -8,6 +8,7 @@ const loadingGif=transparentLoadingGif;
 
 // import transcript component
 import TranscriptComponent from './transcript';
+import ChatComponent from '../chat_module/chat';
 import InteractiveImageMap from '../stream_plot/stream_plot';
 
 // returns true if the recap is HTML
@@ -167,6 +168,7 @@ const Details = () => {
 
                 {/* Wrapper for search, video informaton, and transcript */}
                 <div className={styles.infoSearchTranscriptWrapper}>
+                    <ChatComponent videoId={videoId} />
                     <div className={styles.infoSearchTranscriptContainer}>
                         {/* Transcript Search and Video Information */}
                         <div className={styles.infoSearchContainer}>
