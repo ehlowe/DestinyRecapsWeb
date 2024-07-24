@@ -154,12 +154,17 @@ const ChatComponent = ({ urlPath, videoId }) => {
     setIsLoading(true);
 
     try {
-      const response = await fetch(urlPath+`?pin=194&video_id=${videoId}`, {
+      const response = await fetch(urlPath, {//`?pin=194&video_id=${videoId}`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: JSON.stringify(newMessages),
+        body: new URLSearchParams({
+          'pin': '194',
+          'video_id': videoId,
+          'chat_history': JSON.stringify(newMessages),
+        }),
+        // body: JSON.stringify(newMessages),
       });
       if (!response.ok) {
         throw new Error('Network response was not ok');
