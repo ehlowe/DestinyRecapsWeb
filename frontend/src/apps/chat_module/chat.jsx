@@ -244,6 +244,9 @@ const ChatComponent = ({ urlPath, videoId }) => {
           Reset
         </button>
       </div>
+      <p style={{ textAlign: 'left', fontSize: '15px', color: '#000' }}>
+        <strong>Disclaimer:</strong> There are MANY hallucinations, its style was trained on Destiny after all...
+      </p>
     </div>
   );
 };
