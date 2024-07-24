@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from "./recaps.module.css";
-
+import ChatComponent from '../chat_module/chat';
 
 // returns true if the meta is HTML
 function isHTML(recap){
@@ -51,8 +51,12 @@ function Recaps() {
             <div className={styles.recapHeader}>
                 <h1>Recaps</h1>
             </div>
+            {/* <div className={styles.chatDiv}>
+                <ChatComponent />
+            </div> */}
             <div className={styles.recapsWrapper}>
                 <div className={styles.allRecaps}>
+                    <ChatComponent urlPath={'/api/homepage_chatbot_response'} videoId={'none'}/>
                     {recaps.map(recap => (
                         <div className={styles.recapContainer} key={recap.video_id}>
                             <div className={styles.recapInfoVideo}>

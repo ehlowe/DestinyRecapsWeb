@@ -9,7 +9,10 @@
 .recapsWrapper {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: start;
+  /* margin */
+  margin-left: 10px;
+  margin-right: auto;
   background-color: midnightblue;
   padding: 0px;
 }
@@ -17,7 +20,8 @@
 /* Goes over all the recaps */
 .allRecaps {
     display: grid;
-    justify-content: space-around;
+    /* justify-content: space-around; */
+    justify-items: start;
     background-color: midnightblue;
     flex-direction: row;
     grid-template-columns: repeat(2,1fr);
@@ -141,6 +145,31 @@
   }
 
 
+.chatDiv{
+  position: fixed;
+  bottom: 1%;
+  right: 2%;
+  /* backgroundColor: 'rgba(0, 0, 0, 0.8)'; */
+  color: 'white';
+  padding: '20px';
+  /* borderRadius: '10px'; */
+  border-radius: 10px;
+  z-index: 9999;
+  /* zIndex: 9999; */
+  /* boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'; */
+  max-width: 390px;
+}
+
+@media (max-width: 1400px) {
+  .chatDiv{
+    position: relative;
+    /* align into center */
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+
 @media (max-width: 768px) {
   .allRecaps {
     grid-template-columns: repeat(1,1fr);
@@ -155,6 +184,9 @@
     height: 60vh;
     box-sizing: border-box;
     background-color: rgb(13, 13, 65);
+  }
+  .chatDiv{
+    position: relative;
   }
 }
 

@@ -168,7 +168,7 @@ const Details = () => {
 
                 {/* Wrapper for search, video informaton, and transcript */}
                 <div className={styles.infoSearchTranscriptWrapper}>
-                    <ChatComponent videoId={videoId} />
+                    <ChatComponent urlPath={'/api/chatbot_response'} videoId={videoId} />
                     <div className={styles.infoSearchTranscriptContainer}>
                         {/* Transcript Search and Video Information */}
                         <div className={styles.infoSearchContainer}>
