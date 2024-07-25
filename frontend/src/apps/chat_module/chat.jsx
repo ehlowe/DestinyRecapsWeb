@@ -152,20 +152,30 @@ const ChatComponent = ({ urlPath, videoId }) => {
     setMessages(newMessages);
     setInputMessage('');
     setIsLoading(true);
-
     try {
-      const response = await fetch(urlPath, {//`?pin=194&video_id=${videoId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          'pin': '194',
-          'video_id': videoId,
-          'chat_history': JSON.stringify(newMessages),
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 seconds timeout
+
+      const response = await Promise.race([
+        fetch(urlPath, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams({
+            'pin': '194',
+            'video_id': videoId,
+            'chat_history': JSON.stringify(newMessages),
+          }),
+          signal: controller.signal
         }),
-        // body: JSON.stringify(newMessages),
-      });
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Request timed out')), 10000)
+        )
+      ]);
+
+      clearTimeout(timeoutId);
+
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -174,10 +184,39 @@ const ChatComponent = ({ urlPath, videoId }) => {
       setMessages([...newMessages, data]);
     } catch (error) {
       console.error('Error:', error);
+      if (error.name === 'AbortError') {
+        console.error('Request timed out');
+      }
     } finally {
       setIsLoading(false);
     }
   };
+
+  //   try {
+  //     const response = await fetch(urlPath, {//`?pin=194&video_id=${videoId}`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/x-www-form-urlencoded',
+  //       },
+  //       body: new URLSearchParams({
+  //         'pin': '194',
+  //         'video_id': videoId,
+  //         'chat_history': JSON.stringify(newMessages),
+  //       }),
+  //       // body: JSON.stringify(newMessages),
+  //     });
+  //     if (!response.ok) {
+  //       throw new Error('Network response was not ok');
+  //     }
+
+  //     const data = await response.json();
+  //     setMessages([...newMessages, data]);
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const resetChat = () => {
     setMessages([
