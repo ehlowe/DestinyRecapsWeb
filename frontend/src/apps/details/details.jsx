@@ -9,7 +9,7 @@ const loadingGif=transparentLoadingGif;
 // import transcript component
 import TranscriptComponent from './transcript';
 import ChatComponent from '../chat_module/chat';
-import InteractiveImageMap from '../stream_plot/stream_plot2';
+import InteractiveImageMap from '../stream_plot/sp';
 
 // returns true if the recap is HTML
 function isHTML(recap){

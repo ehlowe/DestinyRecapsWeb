@@ -5,6 +5,7 @@ import About from './apps/about/about';
 import Recaps from './apps/recaps/recaps';
 import Details from './apps/details/details';
 import Recap from './apps/info-tab-test/recap';
+import Backend from './apps/backend/backend';
 
 import CustomGraph from './apps/test/test';
 
@@ -44,6 +45,7 @@ function PageContent() {
         <Route path="/" element={<Recaps />} />
         <Route path="/details" element={<Details />} />
         <Route path="/test" element={<CustomGraph />} />
+        <Route path="/backend" element={<Backend />} />
       </Routes>
     </div>
   );

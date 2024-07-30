@@ -27,6 +27,9 @@ const DataDrivenVisualization = () => {
       
       const plotting_width = 10;
       const plotting_height = 10;
+      const bar_height = 0.85;
+      const meta_x=0.5
+      const meta_y=0.2
 
       svg.selectAll("*").remove();
 
@@ -54,7 +57,7 @@ const DataDrivenVisualization = () => {
         .append("rect")
         .attr("class", "segment")
         .attr("x", d => scaleX(d.x - d.width/2))
-        .attr("y", scaleY(0.8))
+        .attr("y", scaleY(bar_height))
         .attr("width", d => scaleX(d.width))
         .attr("height", scaleY(bar_height_setting))
         .attr("fill", d => d.color)
@@ -86,11 +89,25 @@ const DataDrivenVisualization = () => {
         .append("line")
         .attr("class", "connection-line")
         .attr("x1", d => scaleX(d.x))
-        .attr("y1", scaleY(0.802))
+        .attr("y1", scaleY(bar_height+0.002))
         .attr("x2", d => scaleX(plotData.abstractions[d.category].x))
         .attr("y2", d => scaleY(plotData.abstractions[d.category].y))
         .attr("stroke", d => d.color)
         .attr("stroke-width", d => scaleY(0.12*d.width+0.0006));
+
+    //   svg.selectAll(".connection-line2")
+    //     // .data(validAbstractions)
+    //     .data(plotData.segments)
+    //     .enter()
+    //     .append("line")
+    //     // .attr("class", "connection-line")
+    //     .attr("class", "abstraction")
+    //     .attr("x1", d => scaleX(d.x))
+    //     .attr("y1", d => scaleY(d.y))
+    //     .attr("x2", scaleX(meta_x))
+    //     .attr("y2", scaleY(meta_y))
+    //     .attr("stroke", d => d.color)
+    //     .attr("stroke-width", d => scaleY(0.01));
 
       // Draw abstractions (ellipses) with interactivity
       const abstractionGroups = svg.selectAll(".abstraction")
@@ -114,6 +131,7 @@ const DataDrivenVisualization = () => {
             .duration(500)
             .style("opacity", 0);
         });
+      
 
       abstractionGroups.append("ellipse")
         .attr("rx", d => scaleX(0.02+d.size/1.8))
@@ -159,6 +177,20 @@ const DataDrivenVisualization = () => {
         });
       }
 
+    //   // draw lines from abstractions to the center circle
+    //   svg.selectAll(".connection-line2")
+    //         .data(validAbstractions)
+    //         .enter()
+    //         .append("line")
+    //         // .attr("class", "connection-line")
+    //         .attr("class", "abstraction")
+    //         .attr("x1", d => scaleX(d.x))
+    //         .attr("y1", d => scaleY(d.y))
+    //         .attr("x2", scaleX(meta_x))
+    //         .attr("y2", scaleY(meta_y))
+    //         .attr("stroke", d => d.color)
+    //         .attr("stroke-width", d => scaleY(0.01));
+
       // Apply text to abstractions
       abstractionGroups.append("text")
         .text(d => d.key)
@@ -167,60 +199,17 @@ const DataDrivenVisualization = () => {
         .style("font-size", d => `${scaleY(d.size * 0.17)}px`)
         .call(wrapText, d => scaleX(d.size * 2 * (circle_size_multiplier + circle_size_offset)));
 
+
+
+        
+
+
+      
+
       console.log("Visualization rendered");
     }
   }, [dimensions]);
-
-  const sendPngToBackend = async (pngDataUrl) => {
-    // // Post the data to the backend
-    // fetch('/api/save_png', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({ pngDataUrl })
-    // })
-    const response = await Promise.race([
-      fetch('/api/save_png', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          'pin': '194',
-          'video_id': "test",
-          'image': JSON.stringify({ pngDataUrl }),
-        }),
-      }),
-      new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Request timed out')), 10000)
-      )
-    ]);
-  }
-
-  const convertSvgToPng = () => {
-    const svgElement = svgRef.current;
-    const serializer = new XMLSerializer();
-    const svgString = serializer.serializeToString(svgElement);
-    const canvas = document.createElement('canvas');
-    canvas.width = dimensions.width;
-    canvas.height = dimensions.height;
-    const ctx = canvas.getContext('2d');
-    const DOMURL = window.URL || window.webkitURL || window;
-    const img = new Image();
-    const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
-    const url = DOMURL.createObjectURL(svgBlob);
-
-    img.onload = () => {
-      ctx.drawImage(img, 0, 0);
-      DOMURL.revokeObjectURL(url);
-      const pngDataUrl = canvas.toDataURL('image/png');
-      sendPngToBackend(pngDataUrl);
-    };
-    img.src = url;
-  };
   
-
   return (
     <div>
       <div ref={containerRef} style={{
@@ -235,7 +224,6 @@ const DataDrivenVisualization = () => {
       }}>
         <svg ref={svgRef} style={{ width: '100%', height: '100%' }} />
       </div>
-      <button onClick={convertSvgToPng}>Save as PNG</button>
     </div>
   );
 };
