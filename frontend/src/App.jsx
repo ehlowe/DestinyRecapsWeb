@@ -5,6 +5,9 @@ import About from './apps/about/about';
 import Recaps from './apps/recaps/recaps';
 import Details from './apps/details/details';
 import Recap from './apps/info-tab-test/recap';
+
+import CustomGraph from './apps/test/test';
+
 import Navigation from './apps/nav/nav';
 
 import { initGA, logPageView } from './usage-analytics/analytics';
@@ -40,6 +43,7 @@ function PageContent() {
         <Route path="/about" element={<About />} />
         <Route path="/" element={<Recaps />} />
         <Route path="/details" element={<Details />} />
+        <Route path="/test" element={<CustomGraph />} />
       </Routes>
     </div>
   );
