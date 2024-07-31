@@ -22,191 +22,186 @@ const DataDrivenVisualization = () => {
 
   useEffect(() => {
     if (svgRef.current && dimensions.width > 0 && dimensions.height > 0) {
-      const svg = d3.select(svgRef.current);
-      const { background_color, bar_height_setting, circle_size_multiplier, circle_size_offset } = plotData.plot_parameters;
-      
-      const plotting_width = 10;
-      const plotting_height = 10;
-      const bar_height = 0.85;
-      const meta_x=0.5
-      const meta_y=0.2
-
-      svg.selectAll("*").remove();
-
-      svg.attr("viewBox", `0 0 ${plotting_width} ${plotting_height}`)
-         .style("background-color", `#${background_color.toString(16)}`);
-
-      const scaleX = d3.scaleLinear().domain([0, 1]).range([0, plotting_width]);
-      const scaleY = d3.scaleLinear().domain([0, 1]).range([0, plotting_height]);
-
-      // Create a tooltip div
-      const tooltip = d3.select(containerRef.current)
-        .append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0)
-        .style("position", "absolute")
-        .style("background-color", "white")
-        .style("border", "1px solid #ddd")
-        .style("padding", "10px")
-        .style("border-radius", "5px");
-
-      // Draw segments (bar) with interactivity
-      svg.selectAll(".segment")
-        .data(plotData.segments)
-        .enter()
-        .append("rect")
-        .attr("class", "segment")
-        .attr("x", d => scaleX(d.x - d.width/2))
-        .attr("y", scaleY(bar_height))
-        .attr("width", d => scaleX(d.width))
-        .attr("height", scaleY(bar_height_setting))
-        .attr("fill", d => d.color)
-        .on("mouseover", function(event, d) {
-          d3.select(this).attr("opacity", 0.7);
-          tooltip.transition()
-            .duration(200)
-            .style("opacity", .9);
-          tooltip.html(`Category: ${d.category}<br/>Width: ${d.width}`)
-            .style("left", (event.pageX) + "px")
-            .style("top", (event.pageY - 28) + "px");
-        })
-        .on("mouseout", function(d) {
-          d3.select(this).attr("opacity", 1);
-          tooltip.transition()
-            .duration(500)
-            .style("opacity", 0);
-        });
-
-      const validAbstractions = Object.entries(plotData.abstractions)
-        .filter(([key, value]) => value != null && value.x != null && value.y != null && value.size != null)
-        .map(([key, value]) => ({ key, ...value }));
-
-      // Draw lines connecting abstractions to segments
-      svg.selectAll(".connection-line")
-        .data(plotData.segments)
-        .enter()
-        .filter(d => d.category !== 'non categorized')
-        .append("line")
-        .attr("class", "connection-line")
-        .attr("x1", d => scaleX(d.x))
-        .attr("y1", scaleY(bar_height+0.002))
-        .attr("x2", d => scaleX(plotData.abstractions[d.category].x))
-        .attr("y2", d => scaleY(plotData.abstractions[d.category].y))
-        .attr("stroke", d => d.color)
-        .attr("stroke-width", d => scaleY(0.12*d.width+0.0006));
-
-    //   svg.selectAll(".connection-line2")
-    //     // .data(validAbstractions)
-    //     .data(plotData.segments)
-    //     .enter()
-    //     .append("line")
-    //     // .attr("class", "connection-line")
-    //     .attr("class", "abstraction")
-    //     .attr("x1", d => scaleX(d.x))
-    //     .attr("y1", d => scaleY(d.y))
-    //     .attr("x2", scaleX(meta_x))
-    //     .attr("y2", scaleY(meta_y))
-    //     .attr("stroke", d => d.color)
-    //     .attr("stroke-width", d => scaleY(0.01));
-
-      // Draw abstractions (ellipses) with interactivity
-      const abstractionGroups = svg.selectAll(".abstraction")
-        .data(validAbstractions)
-        .enter()
-        .append("g")
-        .attr("class", "abstraction")
-        .attr("transform", d => `translate(${scaleX(d.x)}, ${scaleY(d.y)})`)
-        .on("mouseover", function(event, d) {
-          d3.select(this).select("ellipse").attr("opacity", 0.7);
-          tooltip.transition()
-            .duration(200)
-            .style("opacity", .9);
-          tooltip.html(`Abstraction: ${d.key}<br/>Size: ${d.size}`)
-            .style("left", (event.pageX) + "px")
-            .style("top", (event.pageY - 28) + "px");
-        })
-        .on("mouseout", function(d) {
-          d3.select(this).select("ellipse").attr("opacity", 1);
-          tooltip.transition()
-            .duration(500)
-            .style("opacity", 0);
-        });
-      
-
-      abstractionGroups.append("ellipse")
-        .attr("rx", d => scaleX(0.02+d.size/1.8))
-        .attr("ry", d => scaleY(0.02+d.size/2))
-        .attr("fill", d => d.color);
-
-      // Text wrapping function
-      function wrapText(selection, widthFunc) {
-        selection.each(function(d) {
-          const text = d3.select(this);
-          const words = text.text().split(/\s+/);
-          const lineHeight = 1.1; // ems
-          const width = widthFunc(d);
-          
-          let line = [];
-          let lineNumber = 0;
-          const tspan = text.text(null).append("tspan").attr("x", 0).attr("y", 0);
-
-          for (let word of words) {
-            line.push(word);
-            tspan.text(line.join(" "));
-            const lineWidth = tspan.node().getComputedTextLength();
-
-            if (lineWidth > width && line.length > 1) {
-              line.pop();
-              tspan.text(line.join(" "));
-              line = [word];
-              lineNumber++;
-              text.append("tspan")
-                  .attr("x", 0)
-                  .attr("y", 0)
-                  .attr("dy", `${lineNumber * lineHeight}em`)
-                  .text(word)
-                  .style("font-weight", "bold");
-            }
-          }
-
-          const textHeight = (lineNumber + 1) * lineHeight;
-          text.selectAll("tspan")
-            .attr("y", `-${textHeight/2.8}em`)
-            .attr("x", 0)
-            .style("font-weight", "bold");
-        });
-      }
-
-    //   // draw lines from abstractions to the center circle
-    //   svg.selectAll(".connection-line2")
-    //         .data(validAbstractions)
-    //         .enter()
-    //         .append("line")
-    //         // .attr("class", "connection-line")
-    //         .attr("class", "abstraction")
-    //         .attr("x1", d => scaleX(d.x))
-    //         .attr("y1", d => scaleY(d.y))
-    //         .attr("x2", scaleX(meta_x))
-    //         .attr("y2", scaleY(meta_y))
-    //         .attr("stroke", d => d.color)
-    //         .attr("stroke-width", d => scaleY(0.01));
-
-      // Apply text to abstractions
-      abstractionGroups.append("text")
-        .text(d => d.key)
-        .attr("text-anchor", "middle")
-        .attr("dominant-baseline", "middle")
-        .style("font-size", d => `${scaleY(d.size * 0.17)}px`)
-        .call(wrapText, d => scaleX(d.size * 2 * (circle_size_multiplier + circle_size_offset)));
-
-
-
+        const svg = d3.select(svgRef.current);
+        const { background_color, bar_height_setting, circle_size_multiplier, circle_size_offset } = plotData.plot_parameters;
         
+        const plotting_width = 10;
+        const plotting_height = 10;
+        const bar_height = 0.85;
+        const meta_x=0.5
+        const meta_y=0.3
+
+        svg.selectAll("*").remove();
+
+        svg.attr("viewBox", `0 0 ${plotting_width} ${plotting_height}`)
+            .style("background-color", `#${background_color.toString(16)}`);
+
+        const scaleX = d3.scaleLinear().domain([0, 1]).range([0, plotting_width]);
+        const scaleY = d3.scaleLinear().domain([0, 1]).range([0, plotting_height]);
+
+        // Create a tooltip div
+        const tooltip = d3.select(containerRef.current)
+            .append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0)
+            .style("position", "absolute")
+            .style("background-color", "white")
+            .style("border", "1px solid #ddd")
+            .style("padding", "10px")
+            .style("border-radius", "5px");
+
+        // Draw segments (bar) with interactivity
+        svg.selectAll(".segment")
+            .data(plotData.segments)
+            .enter()
+            .append("rect")
+            .attr("class", "segment")
+            .attr("x", d => scaleX(d.x - d.width/2))
+            .attr("y", scaleY(bar_height))
+            .attr("width", d => scaleX(d.width))
+            .attr("height", scaleY(bar_height_setting))
+            .attr("fill", d => d.color)
+            .on("mouseover", function(event, d) {
+            d3.select(this).attr("opacity", 0.7);
+            tooltip.transition()
+                .duration(200)
+                .style("opacity", .9);
+            tooltip.html(`Category: ${d.category}<br/>Width: ${0}`)
+                .style("left", (event.pageX) + "px")
+                .style("top", (event.pageY) + "px");
+            })
+            .on("mouseout", function(d) {
+            d3.select(this).attr("opacity", 1);
+            tooltip.transition()
+                .duration(500)
+                .style("opacity", 0);
+            });
+
+        const validAbstractions = Object.entries(plotData.abstractions)
+            .filter(([key, value]) => value != null && value.x != null && value.y != null && value.size != null)
+            .map(([key, value]) => ({ key, ...value }));
+
+        // Draw lines connecting abstractions to segments
+        svg.selectAll(".connection-line")
+            .data(plotData.segments)
+            .enter()
+            .filter(d => d.category !== 'non categorized')
+            .append("line")
+            .attr("class", "connection-line")
+            .attr("x1", d => scaleX(d.x))
+            .attr("y1", scaleY(bar_height+0.002))
+            .attr("x2", d => scaleX(plotData.abstractions[d.category].x))
+            .attr("y2", d => scaleY(plotData.abstractions[d.category].y))
+            .attr("stroke", d => d.color)
+            .attr("stroke-width", d => scaleY(0.12*d.width+0.0006));
+
+        // Draw lines to meta
+        svg.selectAll(".connection-line2")
+            .data(validAbstractions)
+            .enter()
+            .append("line")
+            .attr("class", "connection-line")
+            // .attr("class", "line")
+            .attr("x1", d => scaleX(d.x))
+            .attr("y1", d => scaleY(d.y))
+            .attr("x2", scaleX(meta_x))
+            .attr("y2", scaleY(meta_y))
+            .attr("stroke", d => d.color)
+            .attr("stroke-width", d => scaleY(0.01));
 
 
+        // draw line going up from meta
+        svg.append("line")
+            .attr("x1", scaleX(meta_x))
+            .attr("y1", scaleY(meta_y))
+            .attr("x2", scaleX(meta_x))
+            .attr("y2", scaleY(0.0))
+            .attr("stroke", "white")
+            .attr("stroke-width", scaleY(0.01));
+
+        // make meta circle and line going up from it
+        svg.append("circle")
+            .attr("cx", scaleX(meta_x))
+            .attr("cy", scaleY(meta_y))
+            .attr("r", scaleX(0.02))
+            .attr("fill", "white");
+
+        // Draw abstractions (ellipses) with interactivity
+        const abstractionGroups = svg.selectAll(".abstraction")
+            .data(validAbstractions)
+            .enter()
+            .append("g")
+            .attr("class", "abstraction")
+            .attr("transform", d => `translate(${scaleX(d.x)}, ${scaleY(d.y)})`)
+            .on("mouseover", function(event, d) {
+            d3.select(this).select("ellipse").attr("opacity", 0.7);
+            tooltip.transition()
+                .duration(200)
+                .style("opacity", .9);
+            tooltip.html(`Abstraction: ${d.key}<br/>Size: ${d.size}`)
+                .style("left", (event.pageX) + "px")
+                .style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseout", function(d) {
+            d3.select(this).select("ellipse").attr("opacity", 1);
+            tooltip.transition()
+                .duration(500)
+                .style("opacity", 0);
+            });
+        abstractionGroups.append("ellipse")
+            .attr("rx", d => scaleX(0.02+d.size/1.8))
+            .attr("ry", d => scaleY(0.02+d.size/2))
+            .attr("fill", d => d.color);
+
+        // Text wrapping function
+        function wrapText(selection, widthFunc) {
+            selection.each(function(d) {
+            const text = d3.select(this);
+            const words = text.text().split(/\s+/);
+            const lineHeight = 1.1; // ems
+            const width = widthFunc(d);
+            
+            let line = [];
+            let lineNumber = 0;
+            const tspan = text.text(null).append("tspan").attr("x", 0).attr("y", 0);
+
+            for (let word of words) {
+                line.push(word);
+                tspan.text(line.join(" "));
+                const lineWidth = tspan.node().getComputedTextLength();
+
+                if (lineWidth > width && line.length > 1) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                lineNumber++;
+                text.append("tspan")
+                    .attr("x", 0)
+                    .attr("y", 0)
+                    .attr("dy", `${lineNumber * lineHeight}em`)
+                    .text(word)
+                    .style("font-weight", "bold");
+                }
+            }
+
+            const textHeight = (lineNumber + 1) * lineHeight;
+            text.selectAll("tspan")
+                .attr("y", `-${textHeight/2.8}em`)
+                .attr("x", 0)
+                .style("font-weight", "bold");
+            });
+        }
+
+        // Apply text to abstractions
+        abstractionGroups.append("text")
+            .text(d => d.key)
+            .attr("text-anchor", "middle")
+            .attr("dominant-baseline", "middle")
+            .style("font-size", d => `${scaleY(d.size * 0.17)}px`)
+            .call(wrapText, d => scaleX(d.size * 2 * (circle_size_multiplier + circle_size_offset)));
       
 
-      console.log("Visualization rendered");
+        console.log("Visualization rendered");
     }
   }, [dimensions]);
   
