@@ -5,6 +5,7 @@ import DataDrivenVisualization from '../stream_plot/sp';
 const Backend = () => {
     const [searchParams] = useSearchParams();
     const videoId = searchParams.get('video_id');
+    const p = searchParams.get('p', null);
     const [slowDetails, setSlowDetails] = useState(null);
     const svgContainerRef = useRef(null);
 
@@ -26,7 +27,7 @@ const Backend = () => {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 body: new URLSearchParams({
-                    'pin': '194',
+                    'mra': p,
                     'video_id': videoId,
                     'image': JSON.stringify({ pngDataUrl }),
                 }),
