@@ -106,7 +106,7 @@ const Backend = () => {
         <div ref={svgContainerRef} style={{ width: '100%', height: '100%' }}>
             {slowDetails && (
                 <div className="data-driven-visualization" style={{ width: '100%', height: '100%' }}>
-                    <DataDrivenVisualization plotData={slowDetails} />
+                    <DataDrivenVisualization plotData={slowDetails.plot_object} />
                 </div>
             )}
         </div>

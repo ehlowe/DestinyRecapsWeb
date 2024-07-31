@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import * as d3 from 'd3';
-import plotData from './plot_data.json';  // Adjust this path as needed
+// import plotData from './plot_data.json';  // Adjust this path as needed
 
-const DataDrivenVisualization = () => {
+const DataDrivenVisualization = ({plotData}) => {
+    console.log(plotData);
     const svgRef = useRef(null);
     const containerRef = useRef(null);
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });

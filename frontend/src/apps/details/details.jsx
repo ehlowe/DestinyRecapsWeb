@@ -124,6 +124,11 @@ const Details = () => {
     var page_width=window.innerWidth;
     console.log("Page Width: ", page_width);
     
+    // console.log("PO: ", slow_details.plot_object);
+    if (slow_details.plot_object!=null){
+        console.log("Plot Object: ", slow_details.plot_object, slow_details.plot_object.PlotParameters);
+    }
+
     return (
         <div className={styles.pageWrapper}>
             {/* Insert Stream Plot but only if the imagePlotBase64 is not null and the length is >100 */}
@@ -135,7 +140,7 @@ const Details = () => {
             <div className={styles.streamPlot}>
                 <div className={styles.streamPlotPlacing}>
                     {slow_details.plot_image!=null && slow_details.plot_image.length>100?
-                        <InteractiveImageMap imageBase64={slow_details.plot_image} clickableAreas={slow_details.plot_clickable_area_data} widthPercentage={100}/>
+                        <InteractiveImageMap plotData={slow_details.plot_object} imageBase64={slow_details.plot_image} clickableAreas={slow_details.plot_clickable_area_data} widthPercentage={100}/>
                         :null
                     }
                     <h2 className={styles.plotFooter}>Click the Bars Segments^ to watch the segment on youtube</h2>
