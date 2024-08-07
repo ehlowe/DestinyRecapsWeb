@@ -67,19 +67,28 @@ const DataDrivenVisualization = ({plotData}) => {
                 .on("mouseover", function(event, d) {
                     d3.select(this).attr("opacity", 0.7);
                     var [x, y] = d3.pointer(event, containerRef.current);
-                    setTooltipContent(`Category: ${d.category}<br/>${d.recap}`);
+                    setTooltipContent(`<strong>Category: ${d.category}</strong>
+                    <br/>
+                    ${d.recap}
+                    <br/>
+                    <strong>CLICK BAR TO GO TO TIMESTAMP:</strong> ${d.href} `);
+                    console.log(d.href);
                     // get width of the tooltip
                     const tooltipWidth = document.querySelector('.tooltip').width;
 
                     x=x-tooltipWidth/2;
                     y=y+10;
-                    console.log(tooltipWidth);
 
                     setTooltipPosition({ x , y });
                 })
                 .on("mouseout", function(d) {
                     d3.select(this).attr("opacity", 1);
                     setTooltipContent('');
+                })
+                .on("click", function(event, d) {
+                    //open the d.href link
+                    console.log("HREF: ", d.href);
+                    window.open(d.href, '_blank');
                 });
 
             const validAbstractions = Object.entries(plotData.abstractions)
