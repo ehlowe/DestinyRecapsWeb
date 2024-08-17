@@ -124,11 +124,6 @@ const Details = () => {
     var page_width=window.innerWidth;
     console.log("Page Width: ", page_width);
     
-    // console.log("PO: ", slow_details.plot_object);
-    if (slow_details.plot_object!=null){
-        console.log("Plot Object: ", slow_details.plot_object, slow_details.plot_object.PlotParameters);
-    }
-
     return (
         <div className={styles.pageWrapper}>
             {/* Insert Stream Plot but only if the imagePlotBase64 is not null and the length is >100 */}

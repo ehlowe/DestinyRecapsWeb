@@ -2,9 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import * as d3 from 'd3';
 // import plotData from './plot_data.json';  // Adjust this path as needed
 
-const DataDrivenVisualization = ({plotData}) => {
-    console.log(plotData);
-    const svgRef = useRef(null);
+const DataDrivenVisualization = ({plotData}) => {    const svgRef = useRef(null);
     const containerRef = useRef(null);
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
     const [tooltipContent, setTooltipContent] = useState('');
@@ -73,13 +71,25 @@ const DataDrivenVisualization = ({plotData}) => {
                     ${d.recap}
                     <br/>
                     <strong>CLICK BAR TO GO TO TIMESTAMP:</strong> ${d.href} `);
-                    console.log(d.href);
                     // get width of the tooltip
                     const tooltipWidth = document.querySelector('.tooltip').width;
-
                     x=x-tooltipWidth/2;
                     y=y+10;
-
+                    setTooltipPosition({ x , y });
+                    // setTooltipSize({ width: tooltipWidth, height: 120 });
+                })
+                .on("touchstart", function(event, d) {
+                    d3.select(this).attr("opacity", 0.7);
+                    var [x, y] = d3.pointer(event, containerRef.current);
+                    setTooltipContent(`<strong>Category: ${d.category}</strong>
+                    <br/>
+                    ${d.recap}
+                    <br/>
+                    <strong>CLICK BAR TO GO TO TIMESTAMP:</strong> ${d.href} `);
+                    // get width of the tooltip
+                    const tooltipWidth = document.querySelector('.tooltip').width;
+                    x=x-tooltipWidth/2;
+                    y=y+10;
                     setTooltipPosition({ x , y });
                     // setTooltipSize({ width: tooltipWidth, height: 120 });
                 })
@@ -89,7 +99,6 @@ const DataDrivenVisualization = ({plotData}) => {
                 })
                 .on("click", function(event, d) {
                     //open the d.href link
-                    console.log("HREF: ", d.href);
                     window.open(d.href, '_blank');
                 });
 
@@ -157,11 +166,10 @@ const DataDrivenVisualization = ({plotData}) => {
                     d3.select(this).select("ellipse").attr("opacity", 0.7);
                     // const x = scaleX(d.x*dimensions.width);
                     // const y = scaleY(d.y*dimensions.height);
-                    console.log(dimensions.height);
                     // const [x, y] = d3.pointer(event, containerRef.current);
                     
                     const x = dimensions.width*d.x;
-                    const y = dimensions.height*d.y;
+                    const y = (dimensions.height*d.y)+50;
 
 
 
@@ -195,9 +203,6 @@ const DataDrivenVisualization = ({plotData}) => {
                 let line = [];
                 let lineNumber = 0;
                 const tspan = text.text(null).append("tspan").attr("x", 0).attr("y", 0);
-
-                console.log(words);
-
                 // set text to empty
                 text.text(null);
                 for (let word of words) {
@@ -242,8 +247,6 @@ const DataDrivenVisualization = ({plotData}) => {
                 .style("font-size", d => `${scaleY(d.size * 0.17)}px`)
                 .call(wrapText, d => scaleX(d.size * 2 * (circle_size_multiplier + circle_size_offset)));
         
-
-            console.log("Visualization rendered");
         }
     }, [dimensions]);
     
@@ -265,8 +268,9 @@ const DataDrivenVisualization = ({plotData}) => {
                 style={{
                   position: 'absolute',
                   left: `${tooltipPosition.x}px`,
-                  top: `${tooltipPosition.y}px`,
-                  width: `auto`,
+                  top: "90%",//`${tooltipPosition.y}px`,
+                //   bottom: '-10px',
+                  width: `90%`,
                   height: `auto`,
                   backgroundColor: 'white',
                   border: '1px solid #ddd',
