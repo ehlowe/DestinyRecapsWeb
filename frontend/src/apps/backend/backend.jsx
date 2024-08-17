@@ -21,7 +21,14 @@ const Backend = () => {
 
     const sendPngToBackend = async (pngDataUrl) => {
         try {
-            const response = await fetch('/api/save_png', {
+            if (process.env.mode=="production"){
+                var target_url="http://0.0.0.0:8000/"
+            } else {
+                var target_url="http://127.0.0.1:8000/"
+            }
+            const response = await fetch(target_url+'api/save_png', {
+
+            // const response = await fetch('http://0.0.0.0:8000/api/save_png', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -91,6 +98,7 @@ const Backend = () => {
             ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
             const pngDataUrl = canvas.toDataURL('image/png');
             sendPngToBackend(pngDataUrl);
+            console.log("SENT TO BACKEND");
         };
         img.src = svgUrl;
     };
@@ -98,7 +106,7 @@ const Backend = () => {
     useEffect(() => {
         if (slowDetails) {
             // Increased timeout to ensure SVG is fully rendered
-            setTimeout(captureSvgAsPng, 500);
+            setTimeout(captureSvgAsPng, 2000);
         }
     }, [slowDetails]);
 
