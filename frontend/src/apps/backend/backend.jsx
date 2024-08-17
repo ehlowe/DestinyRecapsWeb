@@ -21,11 +21,13 @@ const Backend = () => {
 
     const sendPngToBackend = async (pngDataUrl) => {
         try {
-            if (process.env.mode=="production"){
-                var target_url="http://0.0.0.0:8000/"
-            } else {
-                var target_url="http://127.0.0.1:8000/"
-            }
+            // console.log(process.env.mode)
+            // if (process.env.mode=="production"){
+            //     var target_url="http://0.0.0.0:8000/"
+            // } else {
+            //     var target_url="http://127.0.0.1:8000/"
+            // }
+            var target_url="http://0.0.0.0:8000/"
             const response = await fetch(target_url+'api/save_png', {
 
             // const response = await fetch('http://0.0.0.0:8000/api/save_png', {
