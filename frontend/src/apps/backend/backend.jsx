@@ -2,6 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import DataDrivenVisualization from '../stream_plot/sp';
 
+const CSRF_TOKEN = '123';
+
+
 const Backend = () => {
     const [searchParams] = useSearchParams();
     const videoId = searchParams.get('video_id');
@@ -27,14 +30,20 @@ const Backend = () => {
             // } else {
             //     var target_url="http://127.0.0.1:8000/"
             // }
-            var target_url="http://0.0.0.0:8000/"
-            const response = await fetch(target_url+'api/save_png', {
-
-            // const response = await fetch('http://0.0.0.0:8000/api/save_png', {
+            // var target_url="http://0.0.0.0:8000/"
+            // var target_url="http://127.0.0.1:8000/"
+            console.log(pngDataUrl)
+            const response = await fetch('/api/save_png', {
+                // use csrf token
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
+                    //allow acces control allow origin
+                    'Access-Control-Allow-Origin': '*',
                 },
+                // 'mra': p,
+                // 'video_id': videoId,
+                // 'image': JSON.stringify({ pngDataUrl }),
                 body: new URLSearchParams({
                     'mra': p,
                     'video_id': videoId,
