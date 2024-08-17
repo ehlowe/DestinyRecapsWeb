@@ -51,6 +51,8 @@ function Recaps() {
             <div className={styles.recapHeader}>
                 <h1>Recaps</h1>
             </div>
+            
+            <video autoPlay="" id="m3u8-player" className="shaka-video" src="blob:https://vyneer.me/73085d3b-132b-4469-a5fb-950daa5ab738" crossOrigin="anonymous"></video>
             {/* <div className={styles.chatDiv}>
                 <ChatComponent />
             </div> */}

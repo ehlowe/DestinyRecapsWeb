@@ -9,6 +9,7 @@ const DataDrivenVisualization = ({plotData}) => {
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
     const [tooltipContent, setTooltipContent] = useState('');
     const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+    const [tooltipSize, setTooltipSize] = useState({ width: 0, height: 0 });
   
     const updateDimensions = useCallback(() => {
       if (containerRef.current) {
@@ -80,6 +81,7 @@ const DataDrivenVisualization = ({plotData}) => {
                     y=y+10;
 
                     setTooltipPosition({ x , y });
+                    // setTooltipSize({ width: tooltipWidth, height: 120 });
                 })
                 .on("mouseout", function(d) {
                     d3.select(this).attr("opacity", 1);
@@ -166,8 +168,10 @@ const DataDrivenVisualization = ({plotData}) => {
                     // setTooltipContent(`${d.recap}<br/>Width: ${d.width.toFixed(2)}`);
                     // setTooltipContent(`${d.recap}<br/>Width: ${0.1}`);
                     setTooltipContent(`${d.recap}`);
+                    const tooltipWidth = document.querySelector('.tooltip').width;
+                    const tt_x=100;
 
-                    setTooltipPosition({ x, y });
+                    setTooltipPosition({ tt_x, y });
                 })
                 .on("mouseout", function(d) {
                     d3.select(this).select("ellipse").attr("opacity", 1);
@@ -192,23 +196,34 @@ const DataDrivenVisualization = ({plotData}) => {
                 let lineNumber = 0;
                 const tspan = text.text(null).append("tspan").attr("x", 0).attr("y", 0);
 
+                console.log(words);
+
+                // set text to empty
+                text.text(null);
                 for (let word of words) {
                     line.push(word);
                     tspan.text(line.join(" "));
                     const lineWidth = tspan.node().getComputedTextLength();
-
-                    if (lineWidth > width && line.length > 1) {
-                    line.pop();
-                    tspan.text(line.join(" "));
-                    line = [word];
                     lineNumber++;
                     text.append("tspan")
-                        .attr("x", 0)
-                        .attr("y", 0)
-                        .attr("dy", `${lineNumber * lineHeight}em`)
-                        .text(word)
-                        .style("font-weight", "bold");
-                    }
+                            .attr("x", 0)
+                            .attr("y", 0)
+                            .attr("dy", `${-0.9+(lineNumber * lineHeight)}em`)
+                            .text(word)
+                            .style("font-weight", "bold");
+
+                    // if (lineWidth > width && line.length > 1) {
+                    //     line.pop();
+                    //     tspan.text(line.join(" "));
+                    //     line = [word];
+                    //     lineNumber++;
+                    //     text.append("tspan")
+                    //         .attr("x", 0)
+                    //         .attr("y", 0)
+                    //         .attr("dy", `${lineNumber * lineHeight}em`)
+                    //         .text(word)
+                    //         .style("font-weight", "bold");
+                    // }
                 }
 
                 const textHeight = (lineNumber + 1) * lineHeight;
@@ -251,6 +266,8 @@ const DataDrivenVisualization = ({plotData}) => {
                   position: 'absolute',
                   left: `${tooltipPosition.x}px`,
                   top: `${tooltipPosition.y}px`,
+                  width: `auto`,
+                  height: `auto`,
                   backgroundColor: 'white',
                   border: '1px solid #ddd',
                   padding: '10px',
