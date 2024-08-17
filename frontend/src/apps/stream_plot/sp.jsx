@@ -273,6 +273,7 @@ const DataDrivenVisualization = ({plotData}) => {    const svgRef = useRef(null)
                   width: `90%`,
                   height: `auto`,
                   backgroundColor: 'white',
+                  color: 'black',
                   border: '1px solid #ddd',
                   padding: '10px',
                   borderRadius: '5px',
