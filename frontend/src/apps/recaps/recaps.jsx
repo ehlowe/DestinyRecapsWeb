@@ -33,7 +33,7 @@ function Recaps() {
     var [recaps, setRecaps] = useState([]);
     var [weekly_recaps, setWeeklyRecaps] = useState([]);
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/recaps/')
+        fetch('/api/recaps/')
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Failed to fetch recaps with status: ${response.status}`);
