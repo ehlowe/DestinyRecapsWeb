@@ -97,14 +97,14 @@ function Recaps() {
                     ))
                 }
                 </div>
-                <div className={styles.weeklyRecapsWrapper}>
+                {/* <div className={styles.weeklyRecapsWrapper}>
                     {weekly_recaps.map(weekly_recap => (
                         <div>
                             <WeeklyRecap {...weekly_recap} />
                         </div>
                         
                     ))} 
-                </div>
+                </div> */}
             </div> 
 
 
