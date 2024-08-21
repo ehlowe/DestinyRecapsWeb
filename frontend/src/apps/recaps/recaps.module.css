@@ -7,14 +7,29 @@
 
 /* Goes on top of everything else */
 .recapsWrapper {
+  /* display: grid;
+  grid-template-columns: 1fr auto; */
+
   display: flex;
   flex-direction: row;
+  justify-content: start;
+  /* margin */
+  margin-left: 5px;
+  margin-right: auto;
+  background-color: midnightblue;
+  padding: 0px;
+}
+
+.weeklyRecapsWrapper {
+  display: flex;
+  flex-direction: column;
   justify-content: start;
   /* margin */
   margin-left: 10px;
   margin-right: auto;
   background-color: midnightblue;
   padding: 0px;
+  position: sticky;
 }
 
 /* Goes over all the recaps */
@@ -63,7 +78,9 @@
   flex-direction: row;
   margin: 3%;
   justify-content: space-between;
-  width: 97%;
+  width: 94%;
+  max-width: 100%;
+  min-width: 10%;
   
 }
 .recapInfo {
@@ -72,6 +89,9 @@
   justify-content: space-evenly;
   align-items: flex-start;
   color: white;
+  width: 100%;
+  max-width: 100%;
+  min-width: 10%;
 }
 .detailButton {
   background-color: #1b75bc;
@@ -80,6 +100,14 @@
   margin: 2px;
   padding-left: 100px;
   padding-right: 100px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 10%;
+}
+.recapTitle {
+  width: 100%;
+  min-width: 10%;
+  max-width: 100%;
 }
 .recapVideo {
   padding-right: 2px;
@@ -167,26 +195,64 @@
     margin-left: auto;
     margin-right: auto;
   }
+  .allRecaps {
+    grid-template-columns: repeat(2,1fr);
+    padding: 0px;
+    margin: 0px;
+    justify-content: none;
+  }
+
+  .weeklyRecapsWrapper {
+    min-width: 20%;
+    position: sticky;
+  }
 }
 
 
 @media (max-width: 768px) {
+  .recapVideo {
+    display: none;
+  }
+  
   .allRecaps {
     grid-template-columns: repeat(1,1fr);
+    width: 50%;
+    /* width: 20%; */
   }
+
+  /* .allRecaps {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 50%;
+    min-width: 0;
+  } 
+  */
   .recapContainer {
     border: 1px solid #ddd;
     display: flex;
     flex-direction: column;
-    padding: 2px;
-    margin-bottom: 20px;
-    width: 80vw;
+    padding: 1px;
+    margin-bottom: 20px;  
+    width: 100%;
+    max-width: 100%;
+    min-width: 20%;
+
+
+    /* width: 100%;
+    max-width: 100%; */
+
     height: 60vh;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
     background-color: rgb(13, 13, 65);
   }
   .chatDiv{
     position: relative;
+  }
+
+  .weeklyRecapsWrapper {
+    position: sticky;
+    width: 50%;
+    min-width: 20%;
   }
 }
 

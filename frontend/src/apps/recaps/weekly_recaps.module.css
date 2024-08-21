@@ -1,0 +1,30 @@
+
+.weekly_recap_wrapper{
+    display: flex;
+    flex-direction: column;
+    /* margin */
+    margin: 10px;
+    background-color: rgb(13, 13, 65);
+    min-width: 20%;
+    padding: 10px;
+    position: sticky;
+    align-self: start;
+}
+
+.weekly_recap_hook {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    width: 95%;
+    padding: 0 20px;
+    max-height: 30vh;
+    overflow-y: auto;
+}
+
+.weekly_recap_dates {
+    color: white;
+    font-size: 1.5em;
+}

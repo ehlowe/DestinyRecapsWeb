@@ -1,8 +1,11 @@
 .chat-container {
     /* width: 100%; */
     width: 100%;
-    max-width: 35vw;
+    min-width: 20%;
+    /* max-width: 35vw; */
     /* max-width: 400px; */
+    width: 35vw;
+    height: 60vh;
     margin: 0px;
     /* padding: 30px; */
     /* padding: 1rem; */

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styles from "./recaps.module.css";
 import ChatComponent from '../chat_module/chat';
 
+import WeeklyRecap from './weekly_recap';
+
 // returns true if the meta is HTML
 function isHTML(recap){
     if (recap==null){
@@ -28,9 +30,10 @@ function isHTML(recap){
 
 function Recaps() {
     // Fetch recaps from the API
-    var [recaps, setRetas] = useState([]);
+    var [recaps, setRecaps] = useState([]);
+    var [weekly_recaps, setWeeklyRecaps] = useState([]);
     useEffect(() => {
-        fetch('/api/recaps/')
+        fetch('http://127.0.0.1:8000/api/recaps/')
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Failed to fetch recaps with status: ${response.status}`);
@@ -38,12 +41,33 @@ function Recaps() {
                 return response.json();
             })
             .then(data => {
-                setRetas(data);
+                setRecaps(data);
             })
             .catch(error => {
                 console.error('Error fetching recaps:', error);
             });
     }, []);
+
+    useEffect(() => {
+        fetch('/api/weekly_recaps/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch recaps with status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                setWeeklyRecaps(data);
+            })
+            .catch(error => {
+                console.error('Error fetching recaps:', error);
+            });
+    }, []);
+
+    // when the weekly_recaps state changes, log the state
+    useEffect(() => {
+        console.log(weekly_recaps);
+    }, [weekly_recaps]);
 
     // Render recaps
     return (
@@ -51,11 +75,6 @@ function Recaps() {
             <div className={styles.recapHeader}>
                 <h1>Recaps</h1>
             </div>
-            
-            {/* <video autoPlay="" id="m3u8-player" className="shaka-video" src="blob:https://vyneer.me/73085d3b-132b-4469-a5fb-950daa5ab738" crossOrigin="anonymous"></video> */}
-            {/* <div className={styles.chatDiv}>
-                <ChatComponent />
-            </div> */}
             <div className={styles.recapsWrapper}>
                 <div className={styles.allRecaps}>
                     <ChatComponent urlPath={'/api/homepage_chatbot_response'} videoId={'none'}/>
@@ -63,7 +82,7 @@ function Recaps() {
                         <div className={styles.recapContainer} key={recap.video_id}>
                             <div className={styles.recapInfoVideo}>
                                 <div className={styles.recapInfo}>
-                                    <strong className="recap-title">Title: { recap.video_characteristics.title }</strong>
+                                    <strong className={styles.recapTitle}>Title: { recap.video_characteristics.title }</strong>
                                     <button className={styles.detailButton} onClick={() => window.location.href = `/details?video_id=${recap.video_id}`}>Details</button>
                                 </div>
                                 <div className={styles.recapVideo}>
@@ -78,7 +97,23 @@ function Recaps() {
                     ))
                 }
                 </div>
-            </div>
+                <div className={styles.weeklyRecapsWrapper}>
+                    {weekly_recaps.map(weekly_recap => (
+                        <div>
+                            <WeeklyRecap {...weekly_recap} />
+                        </div>
+                        
+                    ))} 
+                </div>
+            </div> 
+
+
+
+            {/* <div>
+                {weekly_recaps.map(weekly_recap => (
+                    <img src={`data:image/png;base64,${weekly_recap.week_image}`} alt="weekly recap" />
+                ))} 
+            </div> */}
         </div>
     );
 }
