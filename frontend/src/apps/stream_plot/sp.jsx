@@ -29,13 +29,15 @@ const DataDrivenVisualization = ({plotData}) => {    const svgRef = useRef(null)
             
             const plotting_width = 10;
             const plotting_height = 10;
+            const real_height = 10;
+            const offset_height = -2;
             const bar_height = 0.85;
             const meta_x = 0.5;
             const meta_y = 0.3;
         
             svg.selectAll("*").remove();
         
-            svg.attr("viewBox", `0 0 ${plotting_width} ${plotting_height}`)
+            svg.attr("viewBox", `0 0 ${plotting_width} ${real_height}`)
                 .style("background-color", `#${background_color.toString(16)}`);
         
             const scaleX = d3.scaleLinear().domain([0, 1]).range([0, plotting_width]);
@@ -255,7 +257,7 @@ const DataDrivenVisualization = ({plotData}) => {    const svgRef = useRef(null)
           <div ref={containerRef} style={{
             backgroundColor: 'transparent',
             borderRadius: '8px',
-            padding: '16px',
+            //padding: '16px',
             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
             width: '100%',
             height: '100%',

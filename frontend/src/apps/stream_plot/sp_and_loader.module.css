@@ -1,0 +1,12 @@
+.recapcontainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.recap {
+    width: 67%;
+    margin-top: -40vh;
+    max-width: 100%;
+    overflow: hidden;
+}

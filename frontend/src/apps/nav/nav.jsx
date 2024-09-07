@@ -8,8 +8,9 @@ function Navigation() {
       <div className="base-button-div">
         <button className="home-button" onClick={() => navigate(`/`)}>Homepage</button>
         <button className="about-button" onClick={() => navigate(`/about`)}>About</button>
-        <div className="discord-banner" dangerouslySetInnerHTML={{__html: `JOIN THE DISCORD! (for post stream recap messages) <a href= https://discord.gg/Bf8JgeFynz>https://discord.gg/Bf8JgeFynz</a>`}}>
-        </div>
+        <button className="stream-recaps-button" onClick={() => navigate(`/stream_recaps`)}>Stream Recaps</button>
+        {/* <div className="discord-banner" dangerouslySetInnerHTML={{__html: `JOIN THE DISCORD! (for post stream recap messages) <a href= https://discord.gg/Bf8JgeFynz>https://discord.gg/Bf8JgeFynz</a>`}}>
+        </div> */}
       </div>
     );
   }

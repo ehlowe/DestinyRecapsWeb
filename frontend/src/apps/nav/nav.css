@@ -1,23 +1,30 @@
 .base-button-div{
   width: 100%;
   display: flex;
-  /* flex-direction: row; */
   align-items: center;
   position: relative;
   z-index: 10;
-  /* justify-content: center; */
+  background-color: #1b75bc;
+  height: auto;
 }
 .home-button {
-    margin: 2%;
-    background-color: #1b75bc;
+    margin: 1%;
+    background-color: #163954;
     color: #e5e7eb;
 }
 
 .about-button {
-  margin: 2%;
-  background-color: #1b75bc;
+  margin: 1%;
+  background-color: #163954;
   color: #e5e7eb;
 }
+
+.stream-recaps-button {
+  margin: 1%;
+  background-color:  #163954;
+  color: #e5e7eb;
+}
+
 .header-title-div{
   color: white;
   text-align: center;
@@ -52,7 +59,7 @@
   color: white;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 390px) {
   .base-button-div {
     flex-direction: column;
     align-items: center; /* Center items vertically in the column layout */
