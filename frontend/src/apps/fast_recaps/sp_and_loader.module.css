@@ -5,6 +5,11 @@
     padding: 5px;
     background-color: #3b3b42;
 }
+.videoLink{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
 
 h3 {
     color: #333;
@@ -80,6 +85,22 @@ h5 {
     position: relative;
     transform: translateY(-40%);
     z-index: 1;
+    background-color: #3b3b42;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.plotLoadingInfo {
+    /* width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative; */
+    transform: translateY(40%);
+    z-index: 1;
+    /* slightly red white color */
+    color: #f8d7d7;
     background-color: #3b3b42;
     align-items: center;
     justify-content: center;
