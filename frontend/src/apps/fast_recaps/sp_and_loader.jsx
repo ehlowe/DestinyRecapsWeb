@@ -14,6 +14,7 @@ function StreamPlot() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [countdown, setCountdown] = useState(20);
+    const [random_fact_index, setRandomFactIndex] = useState(0);
 
     const did_you_know_facts = [
         "Did you know that the shortest war in history lasted 38 minutes?",
@@ -84,11 +85,9 @@ function StreamPlot() {
         return match ? match[1] : null;
     };
 
-    var random_fact_index = Math.floor(Math.random() * did_you_know_facts.length);
-
     const generateRecap = (id) => {
         setIsLoading(true);
-        random_fact_index= Math.floor(Math.random() * did_you_know_facts.length);
+        setRandomFactIndex(Math.floor(Math.random() * did_you_know_facts.length));
         setError(null);
         setCountdown(20);
         fetch(`/api/fast_recap?video_id=${id}`)
