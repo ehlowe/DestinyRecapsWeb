@@ -109,24 +109,38 @@ function StreamPlot() {
     return (
         <div className={styles.pageWrapper}>
             <div className={styles.header}>
-                <h3>Video Plot Generator</h3>
-                {videoId && (
-                    <a className={styles.videoLink} href={`https://www.youtube.com/watch?v=${videoId}`} target="_blank" rel="noreferrer">
-                        https://www.youtube.com/watch?v=${videoId}
-                    </a>
-                )}
-                <form onSubmit={handleSubmit} className={styles.inputSection}>
-                    <input
-                        type="text"
-                        value={userInput}
-                        onChange={handleInputChange}
-                        placeholder="Paste YouTube Video URL or ID"
-                        className={styles.videoIdInput}
-                    />
-                    <button type="submit" disabled={isLoading} className={styles.generateButton}>
-                        {isLoading ? 'Generating...' : 'Load/Generate'}
-                    </button>
-                </form>
+                <div className={styles.headerContent}>
+                    <div>
+                        <h3>Video Plot Generator (20-30 seconds)</h3>
+                        {videoId && (
+                            <a className={styles.videoLink} href={`https://www.youtube.com/watch?v=${videoId}`} target="_blank" rel="noreferrer">
+                                https://www.youtube.com/watch?v=${videoId}
+                            </a>
+                        )}
+                        <form onSubmit={handleSubmit} className={styles.inputSection}>
+                            <input
+                                type="text"
+                                value={userInput}
+                                onChange={handleInputChange}
+                                placeholder="Paste YouTube Video URL or ID"
+                                className={styles.videoIdInput}
+                            />
+                            <button type="submit" disabled={isLoading} className={styles.generateButton}>
+                                {isLoading ? 'Generating...' : 'Load/Generate'}
+                            </button>
+                        </form>
+                    </div>
+                    {/*<div>
+                        <div className={styles.socialLinks}>
+                            <text>Feel free to share!</text>
+                            <a href="https://twitter.com/zapperstrudel">Got Feedback for me?</a>
+                            <text>My Social Media:</text>
+                            <a href="https://twitter.com/zapperstrudel">Twitter</a>
+                            <a href="">Reddit</a>
+                        </div>
+                    </div>
+                    */}
+                </div>
             </div>
 
             {error && <p className={styles.errorMessage}>{error}</p>}
@@ -160,7 +174,20 @@ function StreamPlot() {
                         <h2>Error Generating, Regeneration of the same video isn't a feature yet.</h2>
                     </div>
                 )}
-                <h5>This is AI generated. Transcript and summaries may be inaccurate. Can't be over ~9 hours of content.</h5>
+                <h5>Hovering over the bubbles will reveal a summary of that topic. Clicking Segments will take you to the timestamp.<br></br> These are AI generated. The transcript used and subsequent summaries may be inaccurate. Input video Can't be over ~9 hours of content. </h5>
+                <div style={{display: "block", color: "white", backgroundColor: "white", zIndex: 1}}>          
+                    <span style={{
+                            margin: "10px",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            backgroundColor: "white",
+                            color: "black",
+                            fontSize: "10px",
+                            }}>This website is an experimental tool created for educational and non-commercial purposes only. The summarization feature is provided as a test of AI-based summarization technology, and no revenue is generated from its operation.<br></br>
+                        
+                        The summaries generated on this website are based on transcripts provided by YouTube videos. All original content, including video transcripts, remains the property of their respective copyright holders. This tool is not affiliated with or endorsed by YouTube or any of the content creators whose videos are summarized. If you are a copyright holder and have concerns about the use of your content, please contact me at <a href="https://twitter.com/zapperstrudel">https://twitter.com/zapperstrudel</a>, and I will take prompt action. 
+                    </span>
+                </div>
             </div>
         </div>
     );
